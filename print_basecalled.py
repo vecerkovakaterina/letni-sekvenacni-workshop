@@ -1,12 +1,17 @@
 import pod5
 import subprocess
 import os
+import sys
 
 # TODO path to the first pod5 file
 
-path_to_dorado_models="/home/lab33/researchers_night/dna_r10.4.1_e8.2_400bps_sup@v4.3.0/"
-first_pod5 = "/var/lib/minknowOld/20241023_Artemia/Artemia/20241023_1453_MN35406_FAY54811_f133089e/pod5/FAY54811_f133089e_b6e97c76_3.pod5"
-##first_pod5 = "/var/lib/minknow/data/20240927_S_pastoriani/S_pastoriani/20240927_1613_MN35406_FAY54794_83b7ce44/pod5/FAY54794_83b7ce44_e0878d97_0.pod5"
+path_to_dorado_models = sys.argv[1]
+first_pod5 = sys.argv[2]
+
+
+# path_to_dorado_models="/home/lab33/researchers_night/dna_r10.4.1_e8.2_400bps_sup@v4.3.0/"
+# first_pod5 = "/var/lib/minknowOld/20241023_Artemia/Artemia/20241023_1453_MN35406_FAY54811_f133089e/pod5/FAY54811_f133089e_b6e97c76_3.pod5"
+#first_pod5 = "/var/lib/minknow/data/20240927_S_pastoriani/S_pastoriani/20240927_1613_MN35406_FAY54794_83b7ce44/pod5/FAY54794_83b7ce44_e0878d97_0.pod5"
 
 record_counter = 0
 
