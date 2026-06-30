@@ -1,0 +1,22 @@
+name: nanopore-workshop
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - ipywidgets
+  - notebook
+  - ipykernel
+  - pandas
+  - numpy
+  - matplotlib
+  - plotly
+  - biopython
+  - scipy
+  - samtools
+  - minimap2
+  - bedtools
+  - pip
+  - pip:
+      - pod5
