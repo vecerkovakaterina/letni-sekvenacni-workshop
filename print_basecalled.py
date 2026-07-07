@@ -36,7 +36,7 @@ def basecall_read(read, path_to_dorado_models, work_dir):
 
     # write the single new read to its own pod5 file
     with pod5.Writer(tmp_pod5) as writer:
-        writer.add_read(read.to_read())
+        writer.add_read(read)
 
     # basecall it
     with open(tmp_bam, "wb") as bam_out:
@@ -83,13 +83,20 @@ def main():
         try:
             while True:
                 with pod5.Reader(args.pod5_file) as reader:
-                    reads = list(reader.reads())
+                    # .to_read() must be called while the reader is still open —
+                    # ReadRecord objects are lazy references into the Arrow tables,
+                    # which are released when the context exits.
+                    reads = [(r.read_id, r.to_read()) for r in reader.reads()]
 
-                new_reads = [r for r in reads if r.read_id not in seen_read_ids]
-                for read in new_reads:
+                new_reads = [(rid, r) for rid, r in reads if rid not in seen_read_ids]
+                
+                for read_id, read in new_reads:
                     basecall_read(read, args.path_to_dorado_models, work_dir)
-                    seen_read_ids.add(read.read_id)
+                    seen_read_ids.add(read_id)
 
+                if not new_reads:
+                    total = len(reads)
+                    print(f"Čekám na nové čtení... (zatím přečteno {total})", flush=True)
                 time.sleep(args.poll_interval)
         except KeyboardInterrupt:
             print("\nStopped.")
