@@ -79,7 +79,7 @@ def compute_genome_coverage(bams):
         _run(f"samtools coverage {bam} | head -n 25 > {coverage_tsv}")
 
         df = pd.read_csv(coverage_tsv, sep="\t", usecols=["#rname", "startpos", "endpos", "numreads"])
-        df[f"{name}_coverage"] = df["numreads"] / df["endpos"]
+        df[f"{name}_coverage"] = df["numreads"] / df["endpos"] # normalizovane na delku chromozomu
         df = df.drop(columns="numreads")
         per_sample_dfs.append(df)
 
@@ -94,7 +94,7 @@ def compute_genome_coverage(bams):
     return coverages_df, read_counts
 
 
-def normalize_and_average(coverages_df, read_counts, samples, multiply_by=1_000_000):
+def normalize_and_average(coverages_df, read_counts, samples, multiply_by=1_000_000_000):
     """
     Normalizuje pokrytí podle počtu namapovaných čtení v každém vzorku (aby šly
     vzorky s různou hloubkou sekvenování spravedlivě porovnat) a spočítá
