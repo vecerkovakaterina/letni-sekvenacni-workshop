@@ -278,7 +278,7 @@ def plot_chromosome_coverage(chrom_num, df):
     df_subset = df.loc[df["chrom"] == str(chrom_num), ]
     fig = px.line(df_subset, x="window_start", y=value_cols, title=f"Pokrytí chromozomu {chrom_num}", line_shape="hv")
     fig.update_layout(xaxis_title="Souřadnice", yaxis_title="Pokrytí")
-    fig.show()
+    fig.show(renderer="notebook")
 
 
 def run_anova(coverages_df, samples, alpha=0.05):
